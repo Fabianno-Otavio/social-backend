@@ -1,7 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { PostModel } from 'src/post/post.model';
 
 @ObjectType()
 export class UserModel {
+  @Field()
+  id: string;
   @Field()
   socialName: string;
   @Field()
@@ -13,10 +16,13 @@ export class UserModel {
   @Field()
   updatedAt: Date;
 
-  // posts :       Post[]
+  @Field(() => [PostModel])
+  posts?: PostModel[];
   // postLikes:    PostLike[]
   // comments:     Comment[]
   // commentLikes: CommentLike[]
-  // followedBy:   User[]
-  // following:    User[]
+  @Field(() => [String])
+  followedBy?: string[];
+  @Field(() => [String])
+  following?: string[];
 }

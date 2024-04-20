@@ -25,8 +25,8 @@ model User {
   postLikes    PostLike[]
   comments     Comment[]
   commentLikes CommentLike[]
-  followedBy   User[]        @relation("UserFollows")
-  following    User[]        @relation("UserFollows")
+  followedBy   String[]
+  following    String[]
 }
 
 model Post {
