@@ -21,7 +21,7 @@ export class CommentModel {
   @Field()
   updatedAt: Date;
 
-  @Field()
+  @Field(() => [CommentLikeModel])
   commentLikes: CommentLikeModel[];
   @Field(() => PostModel)
   post: PostModel;

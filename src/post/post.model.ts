@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { UserModel } from 'src/user/user.model';
-import { PostLikeModel } from './postLike.model';
 import { CommentLikeModel } from 'src/comment/commentLike.model';
 import { CommentModel } from 'src/comment/comment.model';
+import { PostLikeModel } from './postLike.model';
 
 @ObjectType()
 export class PostModel {
