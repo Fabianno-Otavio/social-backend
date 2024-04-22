@@ -14,57 +14,73 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(uuid())
-  socialName   String
-  username     String
-  email        String
-  password     String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  posts        Post[]
-  postLikes    PostLike[]
-  comments     Comment[]
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email      String
+  followedBy String[]
+  following  String[]
+  password   String
+  socialName String
+  username   String
+
   commentLikes CommentLike[]
-  followedBy   String[]
-  following    String[]
+  comments     Comment[]
+  postLikes    PostLike[]
+  posts        Post[]
 }
 
 model Post {
-  id           String        @id @default(uuid())
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  content   String
+  likeCount Int    @default(0)
+  title     String
+
+  commentLikes CommentLike[]
+  comments     Comment[]
+  postLikes    PostLike[]
   user         User          @relation(fields: [userId], references: [id])
   userId       String
-  title        String
-  content      String
-  likeCount    Int           @default(0)
-  comments     Comment[]
-  commentLikes CommentLike[]
-  postLikes    PostLike[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
 }
 
 model PostLike {
-  id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  id String @id @default(uuid())
+
   post   Post   @relation(fields: [postId], references: [id])
   postId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Comment {
-  id        String @id @default(uuid())
-  post      Post   @relation(fields: [postId], references: [id])
-  postId    String
-  user      User   @relation(fields: [userId], references: [id])
-  userId    String
+  id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   content   String
   likeCount Int    @default(0)
+
+  CommentLike CommentLike[]
+  post        Post          @relation(fields: [postId], references: [id])
+  postId      String
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
 }
 
 model CommentLike {
-  id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-  post   Post   @relation(fields: [postId], references: [id])
-  postId String
+  id String @id @default(uuid())
+
+  comment   Comment @relation(fields: [commentId], references: [id])
+  commentId String
+  post      Post    @relation(fields: [postId], references: [id])
+  postId    String
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
 }

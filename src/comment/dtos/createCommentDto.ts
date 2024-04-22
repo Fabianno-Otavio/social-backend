@@ -1,12 +1,12 @@
 import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
-export class CreatePostDto {
+export class CreateCommentDto {
+  @Field()
+  postId: string;
   @Field()
   userId: string;
 
-  @Field()
-  title: string;
   @Field()
   content: string;
 }

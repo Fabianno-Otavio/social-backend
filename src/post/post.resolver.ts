@@ -10,12 +10,14 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { CommentService } from 'src/comment/comment.service';
 
 @Resolver(() => PostModel)
 export class PostResolver {
   constructor(
     private $post: PostService,
     private $user: UserService,
+    private $comment: CommentService,
   ) {}
 
   @Query(() => [PostModel])
@@ -38,8 +40,28 @@ export class PostResolver {
     return await this.$post.getFeed(userId);
   }
 
+  @Mutation(() => PostModel)
+  async likePost(@Args('id') id: string) {
+    return await this.$post.likePost(id);
+  }
+
+  @ResolveField('commentLikes')
+  async commentLikes(@Parent() post: PostModel) {
+    return await this.$comment.getAllCommentLikesByPostId(post.id);
+  }
+
+  @ResolveField('comments')
+  async comments(@Parent() post: PostModel) {
+    return await this.$comment.getAllCommentsByPostId(post.id);
+  }
+
+  @ResolveField('postLikes')
+  async postLikes(@Parent() post: PostModel) {
+    return await this.$post.getAllPostLikesByPostId(post.id);
+  }
+
   @ResolveField('user')
   async user(@Parent() post: PostModel) {
-    return this.$user.getUserById(post.userId);
+    return await this.$user.getUserById(post.userId);
   }
 }
