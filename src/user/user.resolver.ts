@@ -1,4 +1,4 @@
-import { CreateUserDto } from './dtos/createUserDTO';
+import { CreateUserDto } from './dtos/createUserDto';
 import { PostService } from 'src/post/post.service';
 import { UserModel } from './user.model';
 import { UserService } from './user.service';

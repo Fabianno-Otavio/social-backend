@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from './dtos/createUserDTO';
+import { CreateUserDto } from './dtos/createUserDto';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prima.service';
 import { UserModel } from './user.model';
