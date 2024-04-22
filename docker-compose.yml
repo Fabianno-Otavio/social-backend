@@ -1,0 +1,19 @@
+version: '3'
+services:
+  backend:
+    build: .
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:admin@db:5432/social?schema=public
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: social
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - '5432:5432'
